@@ -34,7 +34,7 @@ class MainWindowEx(Ui_MainWindow):
     def create(self):
         try:
             # Validate input
-            n_text = self.lineEdit.text().strip()  # Ensure this matches the QLineEdit object name in your UI
+            n_text = self.lineEdit.text().strip()
             if not n_text:
                 raise ValueError("Input cannot be empty.")
 

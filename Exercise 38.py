@@ -39,31 +39,24 @@ def main():
     # Initialize list
     my_list = initialize_list()
     print("Initial List:", my_list)
-
     # Add elements
     add_element(my_list, int(input("Enter an element to add: ")))
     print("List after adding an element:", my_list)
-
     # Count occurrences of k
     k = int(input("Enter a number (k) to count occurrences: "))
     print(f"Number {k} appears {count_occurrences(my_list, k)} times.")
-
     # Sum of perfect numbers
     print("Sum of perfect numbers in the list:", sum_of_perfect_numbers(my_list))
-
     # Sort ascending and descending
     print("List sorted in ascending order:", sort_ascending(my_list))
     print("List sorted in descending order:", sort_descending(my_list))
-
     # Delete an element
     element_to_delete = int(input("Enter an element to delete: "))
     delete_element(my_list, element_to_delete)
     print("List after deleting an element:", my_list)
-
     # Delete negative numbers
     my_list = delete_negative_numbers(my_list)
     print("List after deleting negative numbers:", my_list)
-
     # Clear the entire list
     clear_list(my_list)
     print("List after clearing all elements:", my_list)
