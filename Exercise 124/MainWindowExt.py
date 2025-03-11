@@ -1,9 +1,9 @@
 import sys
 import pandas as pd
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem
-from MainWindow import Ui_MainWindow  # Import giao diện
+from MainWindow import Ui_MainWindow
 
-class EmployeeManager(QMainWindow):
+class EmployeeManager(QMainWindow,Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
@@ -21,7 +21,7 @@ class EmployeeManager(QMainWindow):
 
     def load_data(self):
         """Tải dữ liệu từ file CSV"""
-        file_path = "../Exercise 124/employee.csv"  # Đổi thành đường dẫn của bạn
+        file_path = "../Exercise 124/employee.csv"
         try:
             self.df = pd.read_csv(file_path)
             self.update_table(self.df)
@@ -43,21 +43,32 @@ class EmployeeManager(QMainWindow):
         new_employee = {
             "EmployeeID": len(self.df) + 1,
             "Name": f"Employee {len(self.df) + 1}",
-            "DateOfBirth": "1995-07-15",
+            "Dob": "1995-07-15",
             "Role": "Developer"
         }
         self.df = pd.concat([self.df, pd.DataFrame([new_employee])], ignore_index=True)
         self.update_table(self.df)
 
     def filter_data(self):
-        """Lọc nhân viên theo năm sinh hoặc vai trò Tester"""
-        keyword = self.ui.lineEdit.text().strip()
-        if keyword.isdigit():  # Nếu nhập năm sinh
-            filtered_df = self.df[pd.to_datetime(self.df["DateOfBirth"]).dt.year == int(keyword)]
-        elif keyword.lower() == "tester":
+        """Lọc nhân viên theo năm sinh hoặc Tester"""
+        year_text = self.ui.lineEdit.text().strip()
+
+        if not year_text:
+            QMessageBox.warning(self, "Lỗi", "Vui lòng nhập năm sinh hoặc 'Tester'")
+            return
+
+        if year_text.isdigit():
+            year = int(year_text)
+            if "Dob" in self.df.columns:
+                self.df["Dob"] = pd.to_datetime(self.df["Dob"], errors="coerce")
+                filtered_df = self.df[self.df["Dob"].dt.year == year]
+            else:
+                QMessageBox.critical(self, "Lỗi", "Không tìm thấy cột 'DateOfBirth' trong dữ liệu")
+                return
+        elif year_text.lower() == "tester":
             filtered_df = self.df[self.df["Role"].str.lower() == "tester"]
         else:
-            QMessageBox.warning(self, "Lỗi", "Nhập năm sinh hoặc 'Tester'")
+            QMessageBox.warning(self, "Lỗi", "Vui lòng nhập năm hợp lệ hoặc 'Tester'")
             return
 
         self.update_table(filtered_df)
