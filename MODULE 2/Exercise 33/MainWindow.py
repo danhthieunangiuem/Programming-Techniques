@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'C:\Users\ACER\PycharmProjects\KTLT\Exercise 33\MainWindow.ui'
+# Form implementation generated from reading ui file 'C:\Users\ACER\PycharmProjects\KTLT\Exercise 59 33\MainWindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.7.1
 #
